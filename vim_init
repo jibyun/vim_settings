@@ -1,0 +1,46 @@
+execute pathogen#infect()
+filetype off
+call vundle#begin()
+
+" Let Vundle manage itself
+Plugin 'VundleVim/Vundle.vim'
+
+" Plugins
+
+call vundle#end()
+
+set nocp
+filetype plugin indent on
+
+" Build tags of my own project with Ctrl+F12
+map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+
+" OmnicppComplete
+let OmniCpp_GlobalScopeSearch = 1
+let OmniCpp_NamespaceSearch = 1
+let OmniCPP_ShowAccess = 1
+let OmniCpp_MayCompleteDot = 1
+let OmniCpp_MayCompleteArrow = 1
+let OmniCpp_MayCompleteScope = 1
+
+" Automatically op and close the popup menu / preview window
+autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+set completeopt=menuone,menu,longest,preview
+
+
+syntax on
+
+
+set number
+set autoindent smartindent
+set autoread
+set laststatus=2
+set encoding=utf-8
+set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
+map <C-a> <esc>ggVG<CR>
+inoremap {<CR> {<CR>}<C-o>O
+
+" Aethetics
+
+set background=light
