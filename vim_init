@@ -51,7 +51,7 @@ let g:airline_symbols.space = "\ua0"
 let g:airline#extensions#hunks#enabled  = 0
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
-"let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#tabline#fnamemod = ':t'
 
 "let g:airline_section_a = airline#section#create(['mode',' ','branch'])
 let g:airline_section_a = 'mode'
@@ -95,4 +95,5 @@ inoremap {<CR> {<CR>}<C-o>O
 map <LocalLeader>ls :ls<CR>
 map <C-b> <esc>:bn<CR>
 map <C-S-b> <esc>:bp<CR>
+map <C-w> <esc>:bdelete %<CR>
 
