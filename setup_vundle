@@ -1,0 +1,7 @@
+#!/bin/bash
+# set up vundle
+# once it's set-up, do ":PluginInstall"
+# reference url: https://github.com/VundleVim/Vundle.vim
+
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
