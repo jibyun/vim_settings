@@ -15,7 +15,7 @@ set nocp
 filetype plugin indent on
 
 " Build C code tags of my own project with Ctrl+F12
-
+map <C-F12> <esc>:!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q %:p:h<CR>
 " ---------------------------------------------------------------------------
 " OmnicppComplete settings - Begin
 " OmnicppComplete
@@ -53,8 +53,8 @@ let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 
-"let g:airline_section_a = airline#section#create(['mode',' ','branch'])
-let g:airline_section_a = 'mode'
+let g:airline_section_a = airline#section#create(['mode'])
+"let g:airline_section_a = 'mode'
 " let g:airline_section_b =
 " let g:airline_section_x = airline#section#create(['%p%%'])
 " let g:airline_section_y = airline#section#create(['%B'])
@@ -95,5 +95,5 @@ inoremap {<CR> {<CR>}<C-o>O
 map <LocalLeader>ls :ls<CR>
 map <C-b> <esc>:bn<CR>
 map <C-S-b> <esc>:bp<CR>
-map <C-w> <esc>:bdelete %<CR>
+map <S-w> <esc>:bdelete %<CR>
 
