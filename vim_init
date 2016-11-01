@@ -63,6 +63,7 @@ let g:airline_section_z = airline#section#create_right(['%p%%','%l/%L:%c'])
 
 syntax on                       " syntax colour on
 set encoding=utf-8              " use encoding: UTF-8
+let c_no_curly_error = 1
 
 set ruler                       " show line number on bar
 set number                      " show line numbers
@@ -73,9 +74,23 @@ if exists("&colorcolumn")
     set colorcolumn=80
 endif
 
+" ---------------------------------------------------------------------------
+"  searching
+set hlsearch                    " enable search highlight globally
+set incsearch                   " show matches as soon as possible
+set showmatch                   " show matching brackets when typing
+" ---------------------------------------------------------------------------
+
 set laststatus=2
 set scrolloff=5                 " keep at least 5 lines above/below cursor
 set autoread                    " watch for file changes by other programs
+set backup                      " procude *~ back up files
+set backupext=~                 " add ~ to back up file as a suffix
+
+" ---------------------------------------------------------------------------
+" tags
+set tags=./tags,tags,../tags,../../tags,../../../tags,../../../../tags,/usr/include/tags
+" ---------------------------------------------------------------------------
 
 " to ensure that set spell check is off
 if v:version >= 700
