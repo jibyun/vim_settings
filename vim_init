@@ -109,6 +109,6 @@ inoremap {<CR> {<CR>}<C-o>O
 " move to next
 map <LocalLeader>ls :ls<CR>
 map <C-b> <esc>:bn<CR>
-map <C-S-b> <esc>:bp<CR>
+map <S-b> <esc>:bp<CR>
 map <S-w> <esc>:bdelete %<CR>
 
