@@ -2,67 +2,64 @@ execute pathogen#infect()
 filetype off
 call vundle#begin()
 
+" Plugins
 " Let Vundle manage itself
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'vim-airline/vim-airline'
-
-" Plugins
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'flazz/vim-colorschemes'
+Plugin 'ciaranm/inkpot'
 
 call vundle#end()
 
 set nocp
 filetype plugin indent on
 
-" Build C code tags of my own project with Ctrl+F12
-map <C-F12> <esc>:!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q %:p:h<CR>
-" ---------------------------------------------------------------------------
-" OmnicppComplete settings - Begin
-" OmnicppComplete
-let OmniCpp_GlobalScopeSearch = 1
-let OmniCpp_NamespaceSearch = 1
-let OmniCPP_ShowAccess = 1
-let OmniCpp_MayCompleteDot = 1
-let OmniCpp_MayCompleteArrow = 1
-let OmniCpp_MayCompleteScope = 1
-
-" Automatically op and close the popup menu / preview window
-autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
-autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-set completeopt=menuone,menu,longest,preview
-" OmnicppComplte settings - End
-" ---------------------------------------------------------------------------
-
-" ---------------------------------------------------------------------------
-" Syntastic Configuration
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
-" ---------------------------------------------------------------------------
-
-" ---------------------------------------------------------------------------
-" airline configuration
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-let g:airline_symbols.space = "\ua0"
-"let g:airline_powerline_fonts = 1
-let g:airline#extensions#hunks#enabled  = 0
-let g:airline#extensions#branch#enabled = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#fnamemod = ':t'
-
-let g:airline_section_a = airline#section#create(['mode'])
-"let g:airline_section_a = 'mode'
-" let g:airline_section_b =
-" let g:airline_section_x = airline#section#create(['%p%%'])
-" let g:airline_section_y = airline#section#create(['%B'])
-let g:airline_section_z = airline#section#create_right(['%p%%','%l/%L:%c'])
+" ---------------------------------------------------------------------------   
+" setup for the visual environment                                              
+if has('gui_running')                                                           
+        set bg=light                                                            
+        set guioptions-=T                                                       
+        set guioptions-=m                                                       
+        set guioptions+=c                                                       
+        "set guifont=Monospace\ 8,Terminal\ 8,fixed                             
+        set guifont=ProggyCleanTT\ 12                                           
+                                                                                
+        let g:inkpot_black_background = 1                                       
+        colorscheme inkpot              " 256 colour                         
+                                                                                
+else                                                                            
+        if $TERM =~ '^xterm'                                                    
+                set t_Co=256                                                    
+        elseif $TERM =~ '^screen-bce'                                           
+                set t_Co=256            " just guessing                         
+        elseif $TERM =~ '^rxvt'                                                 
+                set t_Co=88                                                     
+        elseif $TERM =~ '^linux'                                                
+                set t_Co=8                                                      
+        else                                                                    
+                set t_Co=16                                                     
+        endif                                                                   
+                                                                                
+        set bg=dark                                                             
+        "set bg=light                                                           
+                                                                                
+        "colorscheme desert              " 16 colour                            
+        "colorscheme ps_color                                                   
+        "colorscheme desert256           " 256 colour                           
+        "colorscheme gardener            " 256 colour                           
+        "colorscheme inkpot              " 256 colour                           
+        "colorscheme blacklight          " 256 colour                           
+                                                                                
+        let g:inkpot_black_background = 1                                       
+        colorscheme inkpot              " 256 colour                         
+                                                                                
+endif                                                               
 " ---------------------------------------------------------------------------
 
 syntax on                       " syntax colour on
-set encoding=utf-8              " use encoding: UTF-8
 let c_no_curly_error = 1
 
 set ruler                       " show line number on bar
@@ -92,6 +89,11 @@ set backupext=~                 " add ~ to back up file as a suffix
 set tags=./tags,tags,../tags,../../tags,../../../tags,../../../../tags,/usr/include/tags
 " ---------------------------------------------------------------------------
 
+" ---------------------------------------------------------------------------
+" ignore files with exts...
+set wildignore+=*.d,*.so,*.a,*.o,*.DEP,*.swp,*zip
+" ---------------------------------------------------------------------------
+
 " to ensure that set spell check is off
 if v:version >= 700
     set spelllang=en
@@ -112,3 +114,71 @@ map <C-b> <esc>:bn<CR>
 map <S-b> <esc>:bp<CR>
 map <S-w> <esc>:bdelete %<CR>
 
+
+" Build C code tags of my own project with Ctrl+F12
+map <C-F12> <esc>:!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q %:p:h<CR>
+" ---------------------------------------------------------------------------
+" OmnicppComplete settings - Begin
+" OmnicppComplete
+let OmniCpp_GlobalScopeSearch = 1
+let OmniCpp_NamespaceSearch = 1
+let OmniCPP_ShowAccess = 1
+let OmniCpp_MayCompleteDot = 1
+let OmniCpp_MayCompleteArrow = 1
+let OmniCpp_MayCompleteScope = 1
+
+" Automatically op and close the popup menu / preview window
+autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+set completeopt=menuone,menu,longest,preview
+" OmnicppComplte settings - End
+" ---------------------------------------------------------------------------
+
+" ---------------------------------------------------------------------------
+" Syntastic Configuration
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
+" ---------------------------------------------------------------------------
+
+set encoding=utf-8              " use encoding: UTF-8
+" ---------------------------------------------------------------------------
+" airline configuration
+let g:PowerLine_symbols = 'unicode'
+
+"let g:airline_theme='powerlineish'
+"let g:airline_theme='papercolor'
+"let g:airline_theme='luna'
+let g:airline_theme='wombat'
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+                                                                              
+let g:airline_symbols.linenr = '␤'                                              
+"let g:airline_symbols.branch = '⭠'                                              
+let g:airline_symbols.paste = 'ρ'                                               
+let g:airline_symbols.paste = 'Þ'                                               
+let g:airline_symbols.paste = '∥'                                               
+let g:airline_symbols.whitespace = 'Ξ'                                          
+"let g:airline_symbols.readonly = '⭤'    
+
+let g:airline#extensions#hunks#enabled  = 0
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
+
+let g:airline_section_a = airline#section#create(['mode'])
+"let g:airline_section_a = 'mode'
+" let g:airline_section_b =
+" let g:airline_section_x = airline#section#create(['%p%%'])
+" let g:airline_section_y = airline#section#create(['%B'])
+let g:airline_section_z = airline#section#create_right(['%p%%','%l/%L:%c'])
+" ---------------------------------------------------------------------------
