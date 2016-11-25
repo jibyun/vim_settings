@@ -108,9 +108,11 @@ map <C-a> <esc>ggVG<CR>
 " auto complete {}
 inoremap {<CR> {<CR>}<C-o>O
 
+map <LocalLeader>ls :ls<CR>
+map <LocalLeader>nerd :NERDTree<CR>
+
 " buffer mapping
 " move to next
-map <LocalLeader>ls :ls<CR>
 map <C-b> <esc>:bn<CR>
 map <S-b> <esc>:bp<CR>
 map <S-w> <esc>:bdelete %<CR>
@@ -183,3 +185,9 @@ let g:airline_section_a = airline#section#create(['mode'])
 " let g:airline_section_y = airline#section#create(['%B'])
 let g:airline_section_z = airline#section#create_right(['%p%%','%l/%L:%c'])
 " ---------------------------------------------------------------------------
+
+" ---------------------------------------------------------------------------
+" NERDTree options
+let g:NERDTreeIgnore = ['\.o$', '\.a$', '\.so$', '\.d$', '\.pyc$', '\.swp$']
+" ---------------------------------------------------------------------------
+
