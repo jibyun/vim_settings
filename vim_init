@@ -11,6 +11,7 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'ciaranm/inkpot'
+Plugin 'scrooloose/nerdtree'
 
 call vundle#end()
 
