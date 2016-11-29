@@ -66,11 +66,19 @@ let c_no_curly_error = 1
 set ruler                       " show line number on bar
 set number                      " show line numbers
 set autoindent smartindent      " turn on auto/smart indenting
-set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab     " tab based on loaded file
+"set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab     " tab based on loaded file
+set tabstop=8 softtabstop=0 smarttab
 
 if exists("&colorcolumn")
     set colorcolumn=80
 endif
+
+" ---------------------------------------------------------------------------
+" list chars
+set list
+set listchars=tab:->,trail:.
+" ---------------------------------------------------------------------------
+
 
 " ---------------------------------------------------------------------------
 "  searching
