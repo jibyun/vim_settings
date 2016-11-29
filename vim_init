@@ -118,6 +118,8 @@ inoremap {<CR> {<CR>}<C-o>O
 
 map <LocalLeader>ls :ls<CR>
 map <LocalLeader>nerd :NERDTree<CR>
+" enable middleware indent settings
+map <LocalLeader>mw :set expandtab shiftwidth=4<CR> 
 
 " buffer mapping
 " move to next
