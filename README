@@ -16,5 +16,5 @@ To use YouCompleteMe (Code completer):
 4. Modify the flags to meet the requirements of the project
    Or use a predefined one if suited for the project
    For middleware:
-   >  /path/to/freezer/Users/jbyun/vim_stuff/.ycm_extra_conf-middleware.py /path/to/middleware
+   >  /path/to/freezer/Users/jbyun/vim_stuff/.ycm_extra_conf-middleware.py /path/to/middleware/.ycm_extra_conf.py
 
