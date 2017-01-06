@@ -92,8 +92,8 @@ set showmatch                   " show matching brackets when typing
 set laststatus=2
 set scrolloff=5                 " keep at least 5 lines above/below cursor
 set autoread                    " watch for file changes by other programs
-set backup                      " procude *~ back up files
-set backupext=~                 " add ~ to back up file as a suffix
+"set backup                      " procude *~ back up files
+"set backupext=~                 " add ~ to back up file as a suffix
 
 " ---------------------------------------------------------------------------
 " tags
@@ -120,8 +120,16 @@ inoremap {<CR> {<CR>}<C-o>O
 
 map <LocalLeader>ls :ls<CR>
 map <LocalLeader>nerd :NERDTree<CR>
-" enable middleware indent settings
-map <LocalLeader>mw :set expandtab shiftwidth=4<CR> 
+" enable indent 4 spaces == tab
+map <LocalLeader>sw4 :set expandtab shiftwidth=4<CR> 
+" diable indent 4 spaces == tab
+map <LocalLeader>sw8 :set noexpandtab shiftwidth=8<CR>
+
+" enable list
+map <LocalLeader>l :set list<CR>
+" diable list
+map <LocalLeader>nl :set nolist<CR>
+
 
 " Show func
 map <LocalLeader>sf <Plug>ShowFunc
