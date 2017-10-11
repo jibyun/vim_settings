@@ -68,8 +68,8 @@ let c_no_curly_error = 1
 set ruler                       " show line number on bar
 set number                      " show line numbers
 set autoindent smartindent      " turn on auto/smart indenting
-"set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab     " tab based on loaded file
-set tabstop=8 softtabstop=0 smarttab
+set expandtab shiftwidth=4 smarttab     " tab based on loaded file
+"set tabstop=8 softtabstop=0 smarttab
 
 if exists("&colorcolumn")
     set colorcolumn=80
@@ -77,8 +77,8 @@ endif
 
 " ---------------------------------------------------------------------------
 " list chars
-set list
-set listchars=tab:->,trail:.
+"set list
+"set listchars=tab:->,trail:.
 " ---------------------------------------------------------------------------
 
 
@@ -115,13 +115,15 @@ endif
 let maplocalleader=','
 " ctrl + a to select all
 map <C-a> <esc>ggVG<CR>
+" ctrl + shift + f to fix indentation
+map <S-f> <esc>gg=G<CR>
 " auto complete {}
 inoremap {<CR> {<CR>}<C-o>O
 
 map <LocalLeader>ls :ls<CR>
 map <LocalLeader>nerd :NERDTree<CR>
 " enable indent 4 spaces == tab
-map <LocalLeader>sw4 :set expandtab shiftwidth=4<CR> 
+"map <LocalLeader>sw4 :set expandtab shiftwidth=4<CR> 
 " diable indent 4 spaces == tab
 map <LocalLeader>sw8 :set noexpandtab shiftwidth=8<CR>
 
