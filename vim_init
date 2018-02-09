@@ -12,7 +12,11 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'ciaranm/inkpot'
 Plugin 'scrooloose/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'majutsushi/tagbar'
+"Plugin 'vim-syntastic/syntastic'
+"Plugin 'myint/syntastic-extras'
+Plugin 'junegunn/vim-easy-align'
 Plugin 'Valloric/YouCompleteMe'
 
 call vundle#end()
@@ -29,38 +33,49 @@ if has('gui_running')
         set guioptions+=c                                                       
         "set guifont=Monospace\ 8,Terminal\ 8,fixed                             
         set guifont=ProggyCleanTT\ 12                                           
-                                                                                
-        let g:inkpot_black_background = 1                                       
-        colorscheme inkpot              " 256 colour                         
-                                                                                
-else                                                                            
-        if $TERM =~ '^xterm'                                                    
-                set t_Co=256                                                    
-        elseif $TERM =~ '^screen-bce'                                           
-                set t_Co=256            " just guessing                         
-        elseif $TERM =~ '^rxvt'                                                 
-                set t_Co=88                                                     
-        elseif $TERM =~ '^linux'                                                
-                set t_Co=8                                                      
-        else                                                                    
-                set t_Co=16                                                     
-        endif                                                                   
-                                                                                
-        set bg=dark                                                             
-        "set bg=light                                                           
-                                                                                
-        "colorscheme desert              " 16 colour                            
-        "colorscheme ps_color                                                   
-        "colorscheme desert256           " 256 colour                           
-        "colorscheme gardener            " 256 colour                           
-        "colorscheme inkpot              " 256 colour                           
-        "colorscheme blacklight          " 256 colour                           
-                                                                                
-        let g:inkpot_black_background = 1                                       
-        colorscheme inkpot              " 256 colour                         
-                                                                                
-endif                                                               
+endif
+set t_Co=256
+" if has('gui_running')                                                           
+"         set bg=light                                                            
+"         set guioptions-=T                                                       
+"         set guioptions-=m                                                       
+"         set guioptions+=c                                                       
+"         "set guifont=Monospace\ 8,Terminal\ 8,fixed                             
+"         set guifont=ProggyCleanTT\ 12                                           
+"                                                                                 
+"         "let g:inkpot_black_background = 1                                       
+"         colorscheme inkpot              " 256 colour                         
+"                                                                                 
+" else                                                                            
+"         if $TERM =~ '^xterm'                                                    
+"                 set t_Co=256                                                    
+"         elseif $TERM =~ '^screen-bce'                                           
+"                 set t_Co=256            " just guessing                         
+"         elseif $TERM =~ '^rxvt'                                                 
+"                 set t_Co=88                                                     
+"         elseif $TERM =~ '^linux'                                                
+"                 set t_Co=8                                                      
+"         else                                                                    
+"                 set t_Co=16                                                     
+"         endif                                                                   
+"                                                                                 
+"         set bg=dark                                                             
+"         "set bg=light                                                           
+"                                                                                 
+         "colorscheme desert              " 16 colour                            
+         "colorscheme ps_color                                                   
+         "colorscheme desert256           " 256 colour                           
+         "colorscheme gardener            " 256 colour                           
+         "colorscheme inkpot              " 256 colour                           
+         "colorscheme blacklight          " 256 colour                           
+"
+"         let g:inkpot_black_background = 1                                       
+"         colorscheme inkpot              " 256 colour                         
+"
+"endif
+highlight NonText ctermbg=none
 " ---------------------------------------------------------------------------
+
 
 syntax on                       " syntax colour on
 let c_no_curly_error = 1
@@ -73,12 +88,13 @@ set expandtab shiftwidth=4 smarttab     " tab based on loaded file
 
 if exists("&colorcolumn")
     set colorcolumn=80
+    highlight colorcolumn ctermbg=lightblue guibg=lightblue
 endif
 
 " ---------------------------------------------------------------------------
 " list chars
-"set list
-"set listchars=tab:->,trail:.
+set list
+set listchars=tab:->,trail:.
 " ---------------------------------------------------------------------------
 
 
@@ -111,11 +127,15 @@ if v:version >= 700
     set nospell
 endif
 
+set encoding=utf-8              " use encoding: UTF-8
+"------------------------------------------------------------------------------
+"------------------------------------------------------------------------------
 " Private Mappings
+"------------------------------------------------------------------------------
 let maplocalleader=','
 " ctrl + a to select all
 map <C-a> <esc>ggVG<CR>
-" ctrl + shift + f to fix indentation
+" shift + f to fix indentation
 map <S-f> <esc>gg=G<CR>
 " auto complete {}
 inoremap {<CR> {<CR>}<C-o>O
@@ -123,9 +143,11 @@ inoremap {<CR> {<CR>}<C-o>O
 map <LocalLeader>ls :ls<CR>
 map <LocalLeader>nerd :NERDTree<CR>
 " enable indent 4 spaces == tab
-"map <LocalLeader>sw4 :set expandtab shiftwidth=4<CR> 
-" diable indent 4 spaces == tab
+map <LocalLeader>sw4 :set expandtab shiftwidth=4<CR> 
+" enable indent tab == tab
 map <LocalLeader>sw8 :set noexpandtab shiftwidth=8<CR>
+" enable indent 3 spaces == tab
+map <LocalLeader>sw3 :set expandtab shiftwidth=3<CR> 
 
 " enable list
 map <LocalLeader>l :set list<CR>
@@ -140,13 +162,20 @@ map <LocalLeader>sf <Plug>ShowFunc
 " move to next
 map <C-b> <esc>:bn<CR>
 map <S-b> <esc>:bp<CR>
-map <S-w> <esc>:bdelete %<CR>
+map <LocalLeader>bd :bdelete %<CR>
+
+" delete to the beginning of file
+map <LocalLeader>gd :1,.d<CR>
+
+" delete to the end of file
+map <LocalLeader>Gd :.,$d<CR>
 
 
-" Build C code tags of my own project with Ctrl+F12
-map <C-F12> <esc>:!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q %:p:h<CR>
+" Build C/C++ code tags of my own project with F12
+map <F12> <esc>:!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q %:p:h<CR>
+"------------------------------------------------------------------------------
+"------------------------------------------------------------------------------
 
-set encoding=utf-8              " use encoding: UTF-8
 " ---------------------------------------------------------------------------
 " airline configuration
 let g:PowerLine_symbols = 'unicode'
@@ -188,13 +217,62 @@ let g:airline_section_z = airline#section#create_right(['%p%%','%l/%L:%c'])
 " ---------------------------------------------------------------------------
 
 " ---------------------------------------------------------------------------
-" NERDTree options
-let g:NERDTreeIgnore = ['\.o$', '\.a$', '\.so$', '\.d$', '\.pyc$', '\.swp$']
+" Syntastic options
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1                                               
+"let g:syntastic_check_on_wq = 0
+"let g:syntastic_error_symbol = "✗"
+"
+"let g:syntastic_c_checkers = ['gcc']
+"let g:syntastic_cpp_checkers = ['cppcheck']
+"let g:syntastic_make_checkers = ['gnumake']
+"let g:syntastic_javascript_checkers = ['json_tool']
+"let g:syntastic_json_checkers = ['json_tool']
+"let g:syntastic_python_checkers = ['pyflakes_with_warnings']
+"let g:syntastic_gitcommit_checkers = ['language_check']
+"let g:syntastic_svn_checkers = ['language_check']
 " ---------------------------------------------------------------------------
 
+" ---------------------------------------------------------------------------
+" NERDTree options
+let g:NERDTreeIgnore = ['\.o$', '\.a$', '\.so$', '\.d$', '\.pyc$', '\.swp$']
+" NERDTree git-plugin                                                           
+let g:NERDTreeIndicatorMapCustom = {                                            
+    \ "Modified"  : "✹",                                                        
+    \ "Staged"    : "✚",                                                        
+    \ "Untracked" : "✭",                                                        
+    \ "Renamed"   : "➜",                                                        
+    \ "Unmerged"  : "═",                                                        
+    \ "Deleted"   : "✖",                                                        
+    \ "Dirty"     : "✗",                                                        
+    \ "Clean"     : "✔︎",                                                        
+    \ 'Ignored'   : "☒",                                                        
+    \ "Unknown"   : "?"                                                         
+    \ }                 
 " ---------------------------------------------------------------------------
 " Tagbar settings
 nmap <F4> :TagbarToggle<CR>
 let g:tagbar_sort = 0
 " ---------------------------------------------------------------------------
+
+" ---------------------------------------------------------------------------
+" easy align
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EashAlign)
+" ---------------------------------------------------------------------------
+
+"--------- HELPERS ---------
+"  Delete trailing white space on save
+func! DeleteTrailingWS()
+    exe "normal mz"
+    %s/\s\+$//ge
+    exe "normal `z"
+endfunc
+autocmd BufWrite *.py  :call DeleteTrailingWS()
+autocmd BufWrite *.cpp :call DeleteTrailingWS()
+autocmd BufWrite *.c   :call DeleteTrailingWS()
+autocmd BufWrite *.h   :call DeleteTrailingWS()
+
+
 
