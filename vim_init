@@ -188,7 +188,7 @@ set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 
 " Syntastic-extras configuration
@@ -274,11 +274,13 @@ map <LocalLeader>gd :1,.d<CR>
 " delete to the end of file
 map <LocalLeader>Gd :.,$d<CR>
 
-" turn off sytastic report
+" Syntasitc short keys
+" clear sytastic error/warning list
 map <LocalLeader>sr :SyntasticReset<CR>
-
 " run systastic check
 map <LocalLeader>sc :SyntasticCheck<CR>
+" toggle mode to switch between active (check on buffer write) and passive (manual)
+map <LocalLeader>sm :SyntasticToggleMode<CR>
 
 "------------------------------------------------------------------------------
 "------------------------------------------------------------------------------
